@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Project Data Studio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Main navigation">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">P</div>
+          <div>
+            <strong>Project Data Studio</strong>
+            <span>Clean. Store. Report.</span>
+          </div>
+        </div>
+
+        <nav class="nav-stack">
+          <a href="#import" class="active">Import</a>
+          <a href="#dashboard">Dashboard</a>
+          <a href="#records">Records</a>
+          <a href="#saved">Saved Sets</a>
+        </nav>
+
+        <div class="storage-panel">
+          <span>Active dataset</span>
+          <strong id="activeDatasetName">Sample PM Dataset</strong>
+          <small id="savedCount">0 saved datasets</small>
+        </div>
+      </aside>
+
+      <main>
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Portfolio-ready PM utility</p>
+            <h1>Messy project data, fixed in seconds.</h1>
+          </div>
+          <div class="top-actions">
+            <button class="ghost" id="loadSampleBtn" type="button">Load Sample</button>
+            <button class="primary" id="exportBtn" type="button">Export Clean CSV</button>
+          </div>
+        </header>
+
+        <section class="metrics-grid" aria-label="Dashboard summary">
+          <article class="metric">
+            <span>Total Tasks</span>
+            <strong id="metricTotal">0</strong>
+            <small id="metricRowsNote">0 clean records</small>
+          </article>
+          <article class="metric">
+            <span>At Risk</span>
+            <strong id="metricRisk">0</strong>
+            <small>blocked, overdue, or high risk</small>
+          </article>
+          <article class="metric">
+            <span>Avg Progress</span>
+            <strong id="metricProgress">0%</strong>
+            <small>across active projects</small>
+          </article>
+          <article class="metric">
+            <span>Data Quality</span>
+            <strong id="metricQuality">0%</strong>
+            <small id="metricFixes">0 fixes applied</small>
+          </article>
+        </section>
+
+        <section class="workspace-grid">
+          <div class="panel import-panel" id="import">
+            <div class="panel-header">
+              <div>
+                <h2>Import Messy Data</h2>
+                <p>Paste CSV-like task data or upload a CSV file.</p>
+              </div>
+              <label class="file-button">
+                Upload CSV
+                <input id="fileInput" type="file" accept=".csv,text/csv" />
+              </label>
+            </div>
+            <textarea id="rawInput" spellcheck="false" aria-label="Raw project data"></textarea>
+            <div class="button-row">
+              <button class="primary" id="cleanBtn" type="button">Clean Data</button>
+              <button class="ghost" id="saveBtn" type="button">Save Dataset</button>
+              <button class="ghost danger" id="clearBtn" type="button">Clear</button>
+            </div>
+            <div class="insight-strip" id="cleaningLog" aria-live="polite"></div>
+          </div>
+
+          <div class="panel dashboard-panel" id="dashboard">
+            <div class="panel-header">
+              <div>
+                <h2>Live Dashboard</h2>
+                <p>Updates instantly from the cleaned dataset.</p>
+              </div>
+              <select id="statusFilter" aria-label="Filter by status">
+                <option value="all">All statuses</option>
+                <option value="Not Started">Not Started</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Blocked">Blocked</option>
+                <option value="Done">Done</option>
+              </select>
+            </div>
+            <div class="chart-block">
+              <div class="chart-title">
+                <strong>Status Mix</strong>
+                <span id="chartTotal">0 tasks</span>
+              </div>
+              <div class="bar-chart" id="statusChart"></div>
+            </div>
+            <div class="chart-block">
+              <div class="chart-title">
+                <strong>Risk Signals</strong>
+                <span id="riskNote">No risks found</span>
+              </div>
+              <div class="risk-list" id="riskList"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel table-panel" id="records">
+          <div class="panel-header">
+            <div>
+              <h2>Clean Records</h2>
+              <p>Normalized fields that project managers can trust.</p>
+            </div>
+            <input id="searchInput" type="search" placeholder="Search tasks, owners, projects" />
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Project</th>
+                  <th>Task</th>
+                  <th>Owner</th>
+                  <th>Status</th>
+                  <th>Priority</th>
+                  <th>Due</th>
+                  <th>Progress</th>
+                </tr>
+              </thead>
+              <tbody id="recordsBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel saved-panel" id="saved">
+          <div class="panel-header">
+            <div>
+              <h2>Saved Datasets</h2>
+              <p>Stored in this browser for fast portfolio demos.</p>
+            </div>
+          </div>
+          <div class="saved-list" id="savedList"></div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
